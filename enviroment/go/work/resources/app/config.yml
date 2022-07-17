@@ -1,0 +1,9 @@
+mode: "production"
+httpPort: "8080"
+dbUrl: "127.0.0.1"
+dbPort: "5432"
+dbUser: "brewing_support"
+dbPassword: "brewing_support"
+dbName: "brewing_supportdb"
+secretKey: "secret"
+loginExpTime: 24

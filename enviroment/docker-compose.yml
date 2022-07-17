@@ -1,0 +1,52 @@
+version: '3'
+
+services: 
+  brewing_support_builder:
+    container_name: "brewing_support_builder"
+    build: 
+      dockerfile: "Dockerfile"
+      context: "builder"
+    volumes: 
+      - ".:/mnt/workspace:cached"
+      - "golang_workspace:/workspace/golang"
+      - "node_workspace:/workspace/node"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+  brewing_support_go:
+    build:
+      dockerfile: "Dockerfile"
+      context: "go"
+    container_name: brewing_support_go
+    volumes:
+      - ".:/mnt/workspace:cached"
+      - "golang_workspace:/workspace"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+    ports: 
+      - "8080:8080"
+    depends_on: 
+      - brewing_support_db
+  brewing_support_node:
+    build:
+      dockerfile: "Dockerfile"
+      context: "node"
+    container_name: brewing_support_node
+    volumes:
+      - ".:/mnt/workspace:cached"
+      - "node_workspace:/workspace"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+    ports: 
+      - "4200:4200"
+  brewing_support_db:
+    image: postgres:11.3
+    container_name: brewing_support_db
+    environment: 
+      POSTGRES_USER: "brewing_support"
+      POSTGRES_PASSWORD: "brewing_support"
+      POSTGRES_DB: "brewing_supportdb"
+
+volumes:
+  node_workspace:
+  golang_workspace:
+
