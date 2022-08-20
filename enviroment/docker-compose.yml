@@ -8,8 +8,8 @@ services:
       context: "builder"
     volumes: 
       - ".:/mnt/workspace:cached"
-      - "golang_workspace:/workspace/golang"
-      - "node_workspace:/workspace/node"
+      - "golang_brewing_support_workspace:/workspace/golang"
+      - "node_brewing_support_workspace:/workspace/node"
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
   brewing_support_go:
@@ -19,7 +19,7 @@ services:
     container_name: brewing_support_go
     volumes:
       - ".:/mnt/workspace:cached"
-      - "golang_workspace:/workspace"
+      - "golang_brewing_support_workspace:/workspace"
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
     ports: 
@@ -33,7 +33,7 @@ services:
     container_name: brewing_support_node
     volumes:
       - ".:/mnt/workspace:cached"
-      - "node_workspace:/workspace"
+      - "node_brewing_support_workspace:/workspace"
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
     ports: 
@@ -47,6 +47,6 @@ services:
       POSTGRES_DB: "brewing_supportdb"
 
 volumes:
-  node_workspace:
-  golang_workspace:
+  node_brewing_support_workspace:
+  golang_brewing_support_workspace:
 
