@@ -25,7 +25,7 @@ services:
     ports: 
       - "8080:8080"
     depends_on: 
-      - brewing_support_db
+      - brewing_support_postgres_db
   brewing_support_node:
     build:
       dockerfile: "Dockerfile"
@@ -38,14 +38,21 @@ services:
     tty: true
     ports: 
       - "4200:4200"
-  brewing_support_db:
+  brewing_support_postgres_db:
     image: postgres:11.3
-    container_name: brewing_support_db
+    container_name: brewing_support_postgres_db
     environment: 
       POSTGRES_USER: "brewing_support"
       POSTGRES_PASSWORD: "brewing_support"
       POSTGRES_DB: "brewing_supportdb"
-
+  brewing_support_couch_db:
+    image: couchdb:3.2
+    container_name: brewing_support_couch_db
+    ports: 
+      - "5984:5984"
+    environment: 
+      COUCHDB_USER: "brewing_support"
+      COUCHDB_PASSWORD: "brewing_support"
 volumes:
   node_brewing_support_workspace:
   golang_brewing_support_workspace:
